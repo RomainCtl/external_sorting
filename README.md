@@ -1,2 +1,11 @@
-# external_sorting
-Projet scolaire de système d'exploitation : trions ensembles
+# External sorting
+Projet universitaire de système d'exploitation : trions ensembles
+
+## Build the documentation
+
+In the root directory of the project, run the following command:
+
+```$ make doc```
+
+Then open the file doc.html.
+
