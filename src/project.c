@@ -179,6 +179,15 @@ int main(int argc, char ** argv){
     test();
   }
 
+  /* Time start */
+  char buff[20];
+  struct tm *sTm;
+  time_t start = time(0);
+  sTm = gmtime(&start);
+
+  strftime(buff, sizeof(buff), "%Y-%m-%d %H:%M:%S", sTm);
+  fprintf(stderr, "===== Start procedure at %s =====\n", buff);
+
   /* Call the right function for a mode */
   if(mode_generation){
     /* Mode generation */
@@ -199,6 +208,14 @@ int main(int argc, char ** argv){
     /* Mode demo sort split*/
     projectV1(i_file, o_file, nb_split);
   }
+
+  /* Display end time */
+  time_t end = time(0);
+  sTm = gmtime(&end);
+
+  double diff = difftime(end, start);
+  strftime(buff, sizeof(buff), "%Y-%m-%d %H:%M:%S", sTm);
+  fprintf(stderr, "===== End procedure at %s =====\n===== Duration : %5.1f seconds =====\n", buff, diff);
 
   /* End */
   return 0;

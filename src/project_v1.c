@@ -44,19 +44,6 @@ void projectV1(const char * i_file, const char * o_file, unsigned long nb_split)
     return;
   }
 
-  /* 0 - Deal with case nb_split = 1 */
-  if(nb_split < 2){
-    int * values = NULL;
-    unsigned long nb_elem = SU_loadFile(i_file, &values);
-
-    SORTALGO(nb_elem, values);
-
-    SU_saveFile(o_file, nb_elem, values);
-    
-    free(values);
-    return;
-  }
-
   /* 1 - Split the source file */
 
   /* 1.1 - Create a vector of target filenames for the split */
