@@ -94,18 +94,32 @@ void projectV1(const char * i_file, const char * o_file, unsigned long nb_split)
 
 void projectV1_sortFiles(unsigned long nb_split, const char ** filenames, const char ** filenames_sort){
 
+  pid_t fils[nb_split];
+
   unsigned long cpt = 0;
   for(cpt = 0; cpt < nb_split; ++cpt){
-    int * values = NULL;
-    unsigned long nb_elem = SU_loadFile(filenames[cpt], &values);
-    SU_removeFile(filenames[cpt]);
-    fprintf(stderr, "Inner sort %lu: Array of %lu elem by %d\n", cpt, nb_elem, getpid());
+    // init
+    fils[cpt] = -1;
+    fils[cpt] = fork();
+    if (fils[cpt] == -1){
+      perror("Error lors d'un fork\n");
+      exit(1);
+    }
 
-    SORTALGO(nb_elem, values);
+    if (fils[cpt] == 0){
+      int * values = NULL;
+      unsigned long nb_elem = SU_loadFile(filenames[cpt], &values);
+      SU_removeFile(filenames[cpt]);
+      fprintf(stderr, "Inner sort %lu: Array of %lu elem by %d\n", cpt, nb_elem, getpid());
 
-    SU_saveFile(filenames_sort[cpt], nb_elem, values);
-    free(values);
+      SORTALGO(nb_elem, values);
+
+      SU_saveFile(filenames_sort[cpt], nb_elem, values);
+      free(values);
+      exit(0);
+    }
   }
+  wait(NULL);
 }
 
 void projectV1_combMerge(unsigned long nb_split, const char ** filenames_sort, const char * o_file){
