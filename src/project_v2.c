@@ -127,6 +127,8 @@ void projectV2_combMerge(unsigned long nb_split, const char ** filenames_sort, c
   int nb_print = 0;
   unsigned long cpt = 0;
 
+  pid_t fils[nb_split-2];
+
   char previous_name [PROJECT_FILENAME_MAX_SIZE];
   nb_print = snprintf(previous_name,
 		      PROJECT_FILENAME_MAX_SIZE,
@@ -143,31 +145,43 @@ void projectV2_combMerge(unsigned long nb_split, const char ** filenames_sort, c
     err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
   }
 
-  for(cpt = 1; cpt < nb_split - 1; ++cpt){
+  for(cpt = 1; cpt < nb_split - 1; ++cpt) {
 
-    fprintf(stderr, "Merge sort %lu : %s + %s -> %s \n",
-	    cpt,
-	    previous_name,
-	    filenames_sort[cpt],
-	    current_name);
-    SU_mergeSortedFiles(previous_name,
-			filenames_sort[cpt],
-			current_name);
-    SU_removeFile(previous_name);
-    SU_removeFile(filenames_sort[cpt]);
-
-    nb_print = snprintf(previous_name,
-			PROJECT_FILENAME_MAX_SIZE,
-			"%s", current_name);
-    if(nb_print >= PROJECT_FILENAME_MAX_SIZE){
-      err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
+    fils[cpt-1] = -1;
+    fils[cpt-1] = fork();
+    if (fils[cpt-1] == -1){
+      perror("Error lors d'un fork\n");
+      exit(1);
     }
 
-    nb_print = snprintf(current_name,
-			PROJECT_FILENAME_MAX_SIZE,
-			"/tmp/tmp_split_%d_merge_%lu.txt",getpid(), cpt);
-    if(nb_print >= PROJECT_FILENAME_MAX_SIZE){
-      err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
+    if (fils[cpt-1] == 0) {
+      fprintf(stderr, "Merge sort %lu : %s + %s -> %s \n",
+        cpt,
+        previous_name,
+        filenames_sort[cpt],
+        current_name);
+      SU_mergeSortedFiles(previous_name,
+        filenames_sort[cpt],
+        current_name);
+      SU_removeFile(previous_name);
+      SU_removeFile(filenames_sort[cpt]);
+
+      exit(0);
+    } else {
+      nb_print = snprintf(previous_name,
+        PROJECT_FILENAME_MAX_SIZE,
+        "%s", current_name);
+      if(nb_print >= PROJECT_FILENAME_MAX_SIZE){
+        err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
+      }
+
+      nb_print = snprintf(current_name,
+        PROJECT_FILENAME_MAX_SIZE,
+        "/tmp/tmp_split_%d_merge_%lu.txt",getpid(), cpt);
+      if(nb_print >= PROJECT_FILENAME_MAX_SIZE){
+        err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
+      }
+      wait(NULL);
     }
   }
 
