@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief V0 of the system project.
+ * @brief V2 of the system project.
  */
 
 #ifndef PROJECT_V2_H
