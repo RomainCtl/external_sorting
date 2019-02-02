@@ -27,8 +27,8 @@ BINTGTS = ${TARGETS:%=${BIN}/%}
 CC = gcc
 
 # Options
-CFLAGS = -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native  -march=native  -std=c99
-LDFLAGS = -lm -W -Wall -pedantic -L. -lm
+CFLAGS = -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99
+LDFLAGS = -lm -W -Wall -pedantic -L. -lm -pthread
 
 # Fichiers
 DOX = ${wildcard ${DOCPATH}/*.dox} # Sources
