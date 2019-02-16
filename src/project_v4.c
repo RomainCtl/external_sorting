@@ -27,7 +27,7 @@ void projectV4(const char * i_file, const char * o_file, unsigned long nb_split)
   unsigned long nb_lines = SU_getFileNbLine(i_file);
   unsigned long nb_lines_per_files = nb_lines/ (unsigned long) nb_split;
   fprintf(stderr,
-	  "Projet3 version with %lu split of %lu lines\n",
+	  "Projet4 version with %lu split of %lu lines\n",
 	  nb_split,
 	  nb_lines_per_files);
 
@@ -54,7 +54,7 @@ void projectV4(const char * i_file, const char * o_file, unsigned long nb_split)
     filenames[cpt] = (char *) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
     nb_print = snprintf(filenames[cpt],
 			PROJECT_FILENAME_MAX_SIZE,
-			"/tmp/tmp_split_%d_%lu.txt",getpid(), cpt);
+			"/tmp/tmp_split_%d_%lu.txt", getpid(), cpt);
     if(nb_print >= PROJECT_FILENAME_MAX_SIZE){
       err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
     }
@@ -62,7 +62,7 @@ void projectV4(const char * i_file, const char * o_file, unsigned long nb_split)
     filenames_sort[cpt] = (char *) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
     nb_print = snprintf(filenames_sort[cpt],
 			PROJECT_FILENAME_MAX_SIZE,
-			"/tmp/tmp_split_%d_%lu.sort.txt",getpid(), cpt);
+			"/tmp/tmp_split_%d_%lu.sort.txt", getpid(), cpt);
     if(nb_print >= PROJECT_FILENAME_MAX_SIZE){
       err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
     }
@@ -75,25 +75,32 @@ void projectV4(const char * i_file, const char * o_file, unsigned long nb_split)
 		(const char **) filenames
 		);
 
+  fileD * filenames_sorted = (fileD*) malloc(sizeof(fileD));
+  creation(filenames_sorted);
+  pthread_t thr[nb_split *2 -1];
+
   /* 2 - Sort each file */
-  projectV4_sortFiles(nb_split, (const char **) filenames, (const char **) filenames_sort);
+  projectV4_sortFiles(thr, nb_split, filenames, filenames_sort, filenames_sorted);
 
   /* 3 - Merge (two by two) */
-  projectV4_combMerge(nb_split, (const char **) filenames_sort, (const char *) o_file);
+  projectV4_combMerge(thr, nb_split, filenames_sorted, (const char *) o_file);
 
   /* 4 - Clear */
   for(cpt = 0; cpt < nb_split; ++cpt){
     free(filenames[cpt]); // not needed :  clear in sort
     free(filenames_sort[cpt]);
   }
+  while (!estVide(*filenames_sorted)) retrait(filenames_sorted);
 
   free(filenames);
   free(filenames_sort);
+  free(filenames_sorted);
 
 }
 
 void *v4_sortFiles(void *arg) {
-  struct arg_sort_v4 *args = arg;
+  Arg_Sort_v4 *args = arg;
+
   int * values = NULL;
   unsigned long nb_elem = SU_loadFile(args->file, &values);
   SU_removeFile(args->file);
@@ -102,21 +109,26 @@ void *v4_sortFiles(void *arg) {
   SORTALGO(nb_elem, values);
 
   SU_saveFile(args->file_sort, nb_elem, values);
+
+  ajout(args->f, args->file_sort);
+
   free(values);
   pthread_exit(NULL);
 }
 
-void projectV4_sortFiles(unsigned long nb_split, const char ** filenames, const char ** filenames_sort){
+void projectV4_sortFiles(pthread_t *thr, unsigned long nb_split, char ** filenames, char ** filenames_sort, fileD *filenames_sorted){
 
-  pthread_t thr[nb_split];
-  struct arg_sort_v4 args[nb_split];
+  Arg_Sort_v4 *args = (Arg_Sort_v4 *) malloc(sizeof(Arg_Sort_v4) * nb_split);
 
   unsigned long cpt = 0;
   for(cpt = 0; cpt < nb_split; ++cpt){
 
     args[cpt].cpt = cpt;
+    args[cpt].file = (char*) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
+    args[cpt].file_sort = (char*) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
     args[cpt].file = filenames[cpt];
     args[cpt].file_sort = filenames_sort[cpt];
+    args[cpt].f = filenames_sorted;
 
     thr[cpt] = 1;
     if (pthread_create(&thr[cpt], NULL, v4_sortFiles, (void *) &args[cpt]) != 0) {
@@ -124,120 +136,69 @@ void projectV4_sortFiles(unsigned long nb_split, const char ** filenames, const 
         exit (EXIT_FAILURE);
     }
   }
-  for(cpt = 0; cpt < nb_split; ++cpt)
-    if (pthread_join(thr[cpt], NULL))
-        fprintf( stderr, "pthread_join %ld\n", cpt);
 }
 
 void *v4_mergeFiles(void *arg) {
-  struct arg_merge_v4 *args = arg;
-  int nb_print = 0;
+  Arg_Merge_v4 *args = arg;
 
-  char previous_name [PROJECT_FILENAME_MAX_SIZE];
-  nb_print = snprintf(previous_name,
-          PROJECT_FILENAME_MAX_SIZE,
-          "%s", args->filenames_sort[args->cpt]);
-  if(nb_print >= PROJECT_FILENAME_MAX_SIZE){
-    err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
-  }
+  // Wait
+  if (pthread_join(args->thr[args->thr_to_wait], NULL) || pthread_join(args->thr[args->thr_to_wait+1], NULL))
+      fprintf( stderr, "pthread_join %ld or %ld\n", args->thr_to_wait, args->thr_to_wait+1);
 
-  char current_name [PROJECT_FILENAME_MAX_SIZE];
-  nb_print = snprintf(current_name,
-          PROJECT_FILENAME_MAX_SIZE,
-          "/tmp/tmp_split_%ld_merge_%d.txt", args->id, 0);
-  if(nb_print >= PROJECT_FILENAME_MAX_SIZE){
-    err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
-  }
+  char *source1 = (char *) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
+  char *source2 = (char *) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
+  source1 = obtenirTete(*(args)->f);
+  retrait(args->f);
+  source2 = obtenirTete(*(args)->f);
+  retrait(args->f);
 
+  fprintf(stderr, "Merge sort: %s + %s -> %s\n",
+    source1,
+    source2,
+    args->dest);
+  SU_mergeSortedFiles(source1,
+		      source2,
+		      args->dest);
+  SU_removeFile(source1);
+  SU_removeFile(source2);
 
-  for(args->cpt = args->cpt + 1; args->cpt < args->nb_split - 1; ++args->cpt) {
-    fprintf(stderr, "Merge sort %lu : %s + %s -> %s by %ld\n",
-      args->cpt,
-      previous_name,
-      args->filenames_sort[args->cpt],
-      current_name,
-      args->id);
-    SU_mergeSortedFiles(previous_name,
-      args->filenames_sort[args->cpt],
-      current_name);
-    SU_removeFile(previous_name);
-    SU_removeFile(args->filenames_sort[args->cpt]);
-
-    nb_print = snprintf(previous_name,
-      PROJECT_FILENAME_MAX_SIZE,
-      "%s", current_name);
-    if(nb_print >= PROJECT_FILENAME_MAX_SIZE){
-      err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
-    }
-
-    nb_print = snprintf(current_name,
-      PROJECT_FILENAME_MAX_SIZE,
-      "/tmp/tmp_split_%ld_merge_%lu.txt",args->id, args->cpt);
-    if(nb_print >= PROJECT_FILENAME_MAX_SIZE){
-      err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
-    }
-  }
-
-  /* Last merge for each cascade */
-  char d[PROJECT_FILENAME_MAX_SIZE];
-  sprintf(d, "%ld", args->id);
-  strcat(args->o_file, ".");
-  strcat(args->o_file, d);
-  strcat(args->o_file, ".txt");
-
-  fprintf(stderr, "Last merge sort of %ld: %s + %s -> %s\n",
-    args->id,
-	  previous_name,
-	  args->filenames_sort[args->nb_split - 1],
-	  args->o_file);
-  SU_mergeSortedFiles(previous_name,
-		      args->filenames_sort[args->nb_split - 1],
-		      args->o_file);
-  SU_removeFile(previous_name);
-  SU_removeFile(args->filenames_sort[args->nb_split - 1]);
+  ajout(args->f, args->dest); // Add in FIFO list
 
   pthread_exit(NULL);
 }
 
-void projectV4_combMerge(unsigned long nb_split, const char ** filenames_sort, const char * o_file){
-  if (nb_split < 4) {
-    perror("Number of split too small !\n");
-    exit(1);
-  }
-  unsigned long NB_THR = 2;
-  pthread_t thr[NB_THR];
-  struct arg_merge_v4 args[NB_THR];
-  unsigned long nb_split_thr = (unsigned long)floor( ((double)nb_split) / ((int) NB_THR));
+void projectV4_combMerge(pthread_t *thr, unsigned long nb_split, fileD *f, const char * o_file){
+  unsigned long nb_merge = 0;
+  unsigned long nb_sort_finished = 0;
+  int nb_print = 0;
 
-  for(unsigned long i = 0; i < NB_THR ; ++i){
-    args[i].id = i;
-    args[i].cpt = i*nb_split_thr;
-    args[i].nb_split = i+1 == NB_THR ? (i+1) *nb_split_thr + nb_split%nb_split_thr : (i+1) *nb_split_thr;
-    args[i].filenames_sort = (const char**) malloc(sizeof(char*) * (size_t) nb_split);
-    args[i].o_file = (char *) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
-    args[i].filenames_sort = filenames_sort;
+  Arg_Merge_v4 *args = (Arg_Merge_v4*) malloc(sizeof(Arg_Merge_v4) * (nb_split-1));
 
-    strcpy(args[i].o_file, o_file);
+  // Pour N split, il faut N-1 Thread de merge
+  for (nb_merge = 0 ; nb_merge < nb_split -1 ; nb_merge++) {
+    args[nb_merge].dest = (char*) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
+    args[nb_merge].f = f;
+    args[nb_merge].thr = thr;
+    args[nb_merge].thr_to_wait = nb_sort_finished;
+    nb_sort_finished+=2;
 
-    thr[i] = 1;
-    if (pthread_create(&thr[i], NULL, v4_mergeFiles, (void *) &args[i]) != 0) {
-        fprintf ( stderr , "Erreur dans pthread_create %ld\n", i);
+    if (nb_merge == nb_split -2) {
+      strcpy(args[nb_merge].dest, o_file);
+    } else {
+      nb_print = snprintf(args[nb_merge].dest,
+        PROJECT_FILENAME_MAX_SIZE,
+        "/tmp/tmp_split_%d_merge_%lu.txt", getpid(), nb_merge);
+      if(nb_print >= PROJECT_FILENAME_MAX_SIZE){
+        err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
+      }
+    }
+
+    thr[nb_split+nb_merge] = 1;
+    if (pthread_create(&thr[nb_split+nb_merge], NULL, v4_mergeFiles, (void *) &args[nb_merge]) != 0) {
+        fprintf ( stderr , "Erreur dans pthread_create %ld\n", nb_merge);
         exit (EXIT_FAILURE);
     }
   }
-  for(unsigned long i = 0; i < NB_THR; ++i)
-    if (pthread_join(thr[i], NULL))
-        fprintf( stderr, "pthread_join %ld\n", i);
-
-
-  /* Last merge */
-  fprintf(stderr, "Last merge sort : %s + %s -> %s\n",
-    args[0].o_file,
-    args[1].o_file,
-    o_file);
-  SU_mergeSortedFiles(args[0].o_file,
-          args[1].o_file,
-          o_file);
-  SU_removeFile(args[0].o_file);
-  SU_removeFile(args[1].o_file);
+  if (pthread_join(thr[nb_split *2 -2], NULL))
+    fprintf( stderr, "pthread_join last\n");
 }

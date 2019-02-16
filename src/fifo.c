@@ -4,6 +4,11 @@
  */
 #include "fifo.h"
 
+/**
+ * @brief Maximum length (in character) for a file name.
+ **/
+#define PROJECT_FILENAME_MAX_SIZE 1024
+
 void creation(fileD *f){
     f->Queue=NULL;
     f->Tete=NULL;
@@ -16,9 +21,12 @@ bool estVide(fileD f){
 void ajout(fileD *f, char* filename){
     element *p;
     p = (element*)malloc(sizeof(element));
-    p->file=filename;
+    p->file = (char*) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
+    strcpy(p->file, filename);
     p->next=NULL;
     if (estVide(*f)){
+        f->Queue = (element*) malloc(sizeof(element));
+        f->Tete = (element*) malloc(sizeof(element));
         f->Queue=p;
         f->Tete=p;
     } else {

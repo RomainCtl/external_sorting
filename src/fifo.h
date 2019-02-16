@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Dynamique List (FIFO) struct of the system project.
+ * @brief Dynamic List (FIFO) struct of the system project.
  */
 
 #ifndef FIFO_H
@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
 
 typedef struct elem{

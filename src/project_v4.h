@@ -31,15 +31,18 @@ void projectV4(const char * i_file, const char * o_file, unsigned long nb_split)
  * @param[in] filenames Array of file to sort names.
  * @param[in] filenames_sort Array of sorted file names.
  **/
-void projectV4_sortFiles(unsigned long nb_split,
-			 const char ** filenames,
-			 const char ** filenames_sort);
+void projectV4_sortFiles(pthread_t *thr,
+			 unsigned long nb_split,
+			 char ** filenames,
+			 char ** filenames_sort,
+			 fileD *filenames_sorted);
 
-struct arg_sort_v4 {
+typedef struct arg_sort_v4 {
 	unsigned long cpt;
-	const char *file;
-	const char *file_sort;
-};
+	char *file;
+	char *file_sort;
+	fileD *f;
+} Arg_Sort_v4;
 
 /**
  * @brief Function to sort a temporary subfile and remove it.
@@ -54,17 +57,18 @@ void *v4_sortFiles(void *arg);
  * @param[in] o_file Nome of the output file where sorted data are written.
  * @note It work in stream. Files are not fully loaded in memory.
  **/
-void projectV4_combMerge(unsigned long nb_split,
-			 const char ** filenames_sort,
+void projectV4_combMerge(pthread_t *thr,
+			 unsigned long nb_split,
+			 fileD *filenames_sorted,
 			 const char * o_file);
 
-struct arg_merge_v4 {
-	unsigned long id;
-	unsigned long cpt;
-	unsigned long nb_split;
-	const char **filenames_sort;
-	char *o_file;
-};
+
+typedef struct arg_merge_v4 {
+	char *dest;
+	unsigned long thr_to_wait;
+	pthread_t *thr;
+	fileD *f;
+} Arg_Merge_v4;
 
 /**
  * @brief Function to sort-merge a list of sorted subfiles.
