@@ -11,7 +11,8 @@
 #include <string.h>
 
 typedef struct noeud {
-    int fd[2];
+    unsigned long id;
+    int *fd;
     char *file;
     struct noeud *left;
     struct noeud *right;
@@ -27,7 +28,7 @@ typedef struct noeud {
  * \return T_noeud
  *
  */
-T_noeud* create_noeud(int fd[], char *file, T_noeud *l, T_noeud *r);
+T_noeud* create_noeud(unsigned long id, int fd[], char *file, T_noeud *l, T_noeud *r);
 
 /** \brief verif si est vide
  *
