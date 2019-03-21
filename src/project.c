@@ -11,6 +11,7 @@
 #include "project_v2.h"
 #include "project_v3.h"
 #include "project_v4.h"
+#include "project_v5.h"
 
 /**
  * @brief Maximum length (in character) for a file name.
@@ -82,6 +83,7 @@ int main(int argc, char ** argv){
   int mode_projectV2     = 0;
   int mode_projectV3     = 0;
   int mode_projectV4     = 0;
+  int mode_projectV5     = 0;
   int mode_demoSortSplit = 0;
   int mode_lineCount     = 0;
   int mode_generation    = 0;
@@ -174,6 +176,13 @@ int main(int argc, char ** argv){
       fprintf(stderr, "Missing parameters: need an output and an input file.\n");
       errflg++;
     }
+  } else if(strcmp(mode, "projectV5") == 0){
+    mode_projectV5 = 1;
+    /* need at least in and out file */
+    if(strcmp(i_file, "") == 0 || strcmp(o_file, "") == 0){
+      fprintf(stderr, "Missing parameters: need an output and an input file.\n");
+      errflg++;
+    }
   } else if(strcmp(mode, "test") == 0) {
     mode_test = 1;
   } else if(strcmp(mode, "generation") == 0) {
@@ -243,6 +252,9 @@ int main(int argc, char ** argv){
   } else if(mode_projectV4){
     /* Mode demo sort split*/
     projectV4(i_file, o_file, nb_split);
+  } else if(mode_projectV5){
+    /* Mode demo sort split*/
+    projectV5(i_file, o_file, nb_split);
   }
 
   /* Display end time */

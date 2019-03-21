@@ -19,13 +19,13 @@ void SU_removeFile(const char * file){
 
 	//Define command for deleting file
 	pid_t pid = fork();
-	
+
 	if( pid == -1 )
 		perror("fork");
 	else if( pid == 0)
 	{
 		char *command = "/bin/rm";
-		execl(command, "rm", buffer, NULL );
+		execl(command, "rm", buffer, NULL ); // on n'utilise pas la commande 'system' qui introduit des failles de sécuritées
 	} else
 		wait(NULL);
 }
