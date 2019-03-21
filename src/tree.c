@@ -5,7 +5,7 @@
 #include "tree.h"
 
 
-T_noeud* creerNoeud(unsigned long id, int fd[], char *file, T_noeud *l, T_noeud *r) {
+T_noeud* create_noeud(unsigned long id, int fd[], char *file, T_noeud *l, T_noeud *r) {
     T_noeud *m;
     m = (T_noeud*) malloc(sizeof(T_noeud));
 
