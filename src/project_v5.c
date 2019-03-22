@@ -48,21 +48,12 @@ void projectV5(const char * i_file, const char * o_file, unsigned long nb_split)
 
   /* 1.1 - Create a vector of target filenames for the split */
   char ** filenames = (char**) malloc(sizeof(char*) * (size_t) nb_split);
-  char ** filenames_sort = (char**) malloc(sizeof(char*) * (size_t) nb_split);
   unsigned long cpt = 0;
   for(cpt = 0; cpt < nb_split; ++cpt){
     filenames[cpt] = (char *) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
     nb_print = snprintf(filenames[cpt],
 			PROJECT_FILENAME_MAX_SIZE,
 			"/tmp/tmp_split_%d_%lu.txt", getpid(), cpt);
-    if(nb_print >= PROJECT_FILENAME_MAX_SIZE){
-      err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
-    }
-
-    filenames_sort[cpt] = (char *) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
-    nb_print = snprintf(filenames_sort[cpt],
-			PROJECT_FILENAME_MAX_SIZE,
-			"/tmp/tmp_split_%d_%lu.sort.txt", getpid(), cpt);
     if(nb_print >= PROJECT_FILENAME_MAX_SIZE){
       err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
     }
@@ -73,132 +64,176 @@ void projectV5(const char * i_file, const char * o_file, unsigned long nb_split)
 		nb_lines_per_files,
 		nb_split,
 		(const char **) filenames
-		);
+	);
 
-  fileD * filenames_sorted = (fileD*) malloc(sizeof(fileD));
-  creation(filenames_sorted);
-  pthread_t thr[nb_split *2 -1];
+  /* 2 - Create Binary Tree */
+  int **tubes = (int**) malloc(sizeof(int*) * nb_split);
 
-  /* 2 - Sort each file */
-  projectV5_sortFiles(thr, nb_split, filenames, filenames_sort, filenames_sorted);
+  T_noeud **noeuds = (T_noeud**) malloc(sizeof(T_noeud*) * (nb_split *2 -1));
 
-  /* 3 - Merge (two by two) */
-  projectV5_combMerge(thr, nb_split, filenames_sorted, (const char *) o_file);
-
-  /* 4 - Clear */
-  for(cpt = 0; cpt < nb_split; ++cpt){
-    free(filenames[cpt]); // not needed :  clear in sort
-    free(filenames_sort[cpt]);
+  for (cpt=0 ; cpt < nb_split ; cpt++) {
+    // create sort noeud
+    tubes[cpt] = (int*) malloc(sizeof(int) * 2);
+    pipe(tubes[cpt]);
+    noeuds[cpt] = create_noeud(cpt, tubes[cpt], filenames[cpt], NULL, NULL);
   }
-  while (!estVide(*filenames_sorted)) retrait(filenames_sorted);
-
-  free(filenames);
-  free(filenames_sort);
-  free(filenames_sorted);
-
-}
-
-void *v5_sortFiles(void *arg) {
-  Arg_Sort_v5 *args = arg;
-
-  int * values = NULL;
-  unsigned long nb_elem = SU_loadFile(args->file, &values);
-  SU_removeFile(args->file);
-  fprintf(stderr, "Inner sort %lu: Array of %lu elem by %d\n", args->cpt, nb_elem, getpid());
-
-  SORTALGO(nb_elem, values);
-
-  SU_saveFile(args->file_sort, nb_elem, values);
-
-  ajout(args->f, args->file_sort);
-
-  free(values);
-  pthread_exit(NULL);
-}
-
-void projectV5_sortFiles(pthread_t *thr, unsigned long nb_split, char ** filenames, char ** filenames_sort, fileD *filenames_sorted){
-
-  Arg_Sort_v5 *args = (Arg_Sort_v5 *) malloc(sizeof(Arg_Sort_v5) * nb_split);
-
-  unsigned long cpt = 0;
-  for(cpt = 0; cpt < nb_split; ++cpt){
-
-    args[cpt].cpt = cpt;
-    args[cpt].file = (char*) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
-    args[cpt].file_sort = (char*) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
-    args[cpt].file = filenames[cpt];
-    args[cpt].file_sort = filenames_sort[cpt];
-    args[cpt].f = filenames_sorted;
-
-    thr[cpt] = 1;
-    if (pthread_create(&thr[cpt], NULL, v4_sortFiles, (void *) &args[cpt]) != 0) {
-        fprintf ( stderr , "Erreur dans pthread_create %ld\n", cpt);
-        exit (EXIT_FAILURE);
-    }
-  }
-}
-
-void *v5_mergeFiles(void *arg) {
-  Arg_Merge_v5 *args = arg;
-
-  // Wait
-  if (pthread_join(args->thr[args->thr_to_wait], NULL) || pthread_join(args->thr[args->thr_to_wait+1], NULL))
-      fprintf( stderr, "pthread_join %ld or %ld\n", args->thr_to_wait, args->thr_to_wait+1);
-
-  char *source1 = (char *) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
-  char *source2 = (char *) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
-  source1 = obtenirTete(*(args)->f);
-  retrait(args->f);
-  source2 = obtenirTete(*(args)->f);
-  retrait(args->f);
-
-  fprintf(stderr, "Merge sort: %s + %s -> %s\n",
-    source1,
-    source2,
-    args->dest);
-  SU_mergeSortedFiles(source1,
-		      source2,
-		      args->dest);
-  SU_removeFile(source1);
-  SU_removeFile(source2);
-
-  ajout(args->f, args->dest); // Add in FIFO list
-
-  pthread_exit(NULL);
-}
-
-void projectV5_combMerge(pthread_t *thr, unsigned long nb_split, fileD *f, const char * o_file){
-  unsigned long nb_merge = 0;
-  unsigned long nb_sort_finished = 0;
-  int nb_print = 0;
-
-  Arg_Merge_v5 *args = (Arg_Merge_v5*) malloc(sizeof(Arg_Merge_v5) * (nb_split-1));
-
-  // Pour N split, il faut N-1 Thread de merge
-  for (nb_merge = 0 ; nb_merge < nb_split -1 ; nb_merge++) {
-    args[nb_merge].dest = (char*) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
-    args[nb_merge].f = f;
-    args[nb_merge].thr = thr;
-    args[nb_merge].thr_to_wait = nb_sort_finished;
-    nb_sort_finished+=2;
-
-    if (nb_merge == nb_split -2) {
-      strcpy(args[nb_merge].dest, o_file);
+  for (cpt=0 ; cpt < nb_split-1 ; cpt++) {
+    // create merde noeud
+    char *file = (char*) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
+    if (cpt == nb_split -2) {
+      strcpy(file, o_file);
     } else {
-      nb_print = snprintf(args[nb_merge].dest,
+      nb_print = snprintf(file,
         PROJECT_FILENAME_MAX_SIZE,
-        "/tmp/tmp_split_%d_merge_%lu.txt", getpid(), nb_merge);
+        "/tmp/tmp_merge_%d_%lu.txt", getpid(), nb_split+cpt);
       if(nb_print >= PROJECT_FILENAME_MAX_SIZE){
         err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
       }
     }
+    noeuds[nb_split + cpt] = create_noeud(nb_split+cpt, NULL, file, noeuds[cpt*2], noeuds[cpt*2 +1]);
+  }
+  T_noeud *tree = noeuds[nb_split *2 -2];
 
-    thr[nb_split+nb_merge] = 1;
-    if (pthread_create(&thr[nb_split+nb_merge], NULL, v5_mergeFiles, (void *) &args[nb_merge]) != 0) {
-        fprintf ( stderr , "Erreur dans pthread_create %ld\n", nb_merge);
-        exit (EXIT_FAILURE);
+  /* 3 - Run Trees */
+  run_tree_v5(tree, nb_split *2 -2);
+
+  /* 4 - Clear */
+  for(cpt = 0; cpt < nb_split; ++cpt){
+    free(filenames[cpt]);
+  }
+  free(filenames);
+
+  for(cpt=0 ; cpt < nb_split*2 -1 ; cpt++) {
+    free(noeuds[cpt]);
+  }
+  free(noeuds);
+}
+
+void run_tree_v5(T_noeud *noeud, unsigned long id_last) {
+  if (count_noeud(noeud) < 2) {
+    // Sort case
+    int * values = NULL;
+    unsigned long nb_elem = SU_loadFile(noeud->file, &values);
+    SU_removeFile(noeud->file);
+    fprintf(stderr, "Inner sort %lu : Array of %lu elem by %d\n", noeud->id, nb_elem, getpid());
+
+    SORTALGO(nb_elem, values);
+
+    data_structure_v5 data; // = (data_structure_v5*) malloc(sizeof(data_structure_v5));
+    data.nb_elem = nb_elem;
+    data.values = values;
+
+    // return value to parent noeud
+    close(noeud->fd[0]); // closing read part
+    write(noeud->fd[1], &data, sizeof(data));
+  }
+  else {
+    // merge case
+    pid_t *fils = (pid_t*) malloc(sizeof(pid_t) * 2);
+
+    fils[0] = fork();
+    if (fils[0] == -1){
+      perror("Echec du fork\n");
+      exit(1);
+    } else if (fils[0] == 0) { //fils gauche
+      run_tree_v5(noeud->left, id_last); // lance le traitement du fils gauche
+    }
+    else {
+      // pere
+      fils[1] = fork();
+      if (fils[1] == -1){
+        perror("Echec du fork\n");
+        exit(1);
+      } else if (fils[1] == 0) { //fils droite
+        run_tree_v5(noeud->right, id_last); // lance le traitement du fils droite
+      }
+      else {
+        //pere
+        data_structure_v5 value_r;// = (data_structure_v5*) malloc(sizeof(data_structure_v5));
+        data_structure_v5 value_l;// = (data_structure_v5*) malloc(sizeof(data_structure_v5));
+
+        if (count_noeud(noeud->left) == 1){ // Le fils gauche est un sort
+          close(noeud->left->fd[1]); // closing write part
+          ssize_t t = read(noeud->left->fd[0], &value_l, sizeof(value_l));
+          if (t == -1) {
+            perror("Echec de la lecture (pipe)");
+            exit(1);
+          }
+          close(noeud->left->fd[0]);
+          fflush(NULL);
+        } else { // c'est un merge, on récup le contenu du fichier
+          waitpid(fils[0], NULL, 0); // on attend que le fils termine
+          fprintf(stderr, "DEBUG : %d completed\n", fils[0]);
+          value_l.values = NULL;
+          value_l.nb_elem = SU_loadFile(noeud->left->file, &(value_l.values));
+          SU_removeFile(noeud->left->file);
+        }
+
+        if (count_noeud(noeud->right) == 1){ // Le fils droite est un sort
+          close(noeud->right->fd[1]); // closing write part
+          ssize_t t = read(noeud->right->fd[0], &value_r, sizeof(value_r));
+          if (t == -1) {
+            perror("Echec de la lecture (pipe)");
+            exit(1);
+          }
+          close(noeud->left->fd[1]);
+          fflush(NULL);
+        } else { // c'est un merge, on récup le contenu du fichier
+          waitpid(fils[1], NULL, 0); // on attend que le fils termine
+          fprintf(stderr, "DEBUG : %d completed\n", fils[1]);
+          value_r.values = NULL;
+          value_r.nb_elem = SU_loadFile(noeud->right->file, &(value_r.values));
+          SU_removeFile(noeud->right->file);
+        }
+
+        // Do the merge
+        fprintf(stderr, "Merge sort: %lu + %lu -> %lu (%s) by %d\n",
+          noeud->right->id,
+          noeud->left->id,
+          noeud->id,
+          noeud->file,
+          getpid());
+        merge_sorted_data_v5(value_l,
+                value_r,
+                noeud->file);
+      }
     }
   }
-  if (pthread_join(thr[nb_split *2 -2], NULL))
-    fprintf( stderr, "pthread_join last\n");
+  fprintf(stderr, "DEBUG : %lu: %d done\n", noeud->id, getpid());
+  if (noeud->id != id_last) exit(0);
+}
+
+void merge_sorted_data_v5(const data_structure_v5 values_l, const data_structure_v5 values_r, const char * file_target) {
+  int *values = (int*) malloc(sizeof(int) * values_l.nb_elem + values_r.nb_elem);
+
+  fprintf(stderr, "DEBUG : %lu : %lu\n", values_l.nb_elem, values_r.nb_elem);
+
+  fprintf(stderr, "DEBUG : %d\n", values_l.values[0]);
+
+  unsigned long l=0, r=0, i=0;
+  while (l < values_l.nb_elem || r < values_r.nb_elem) {
+    fprintf(stderr, "DEBUG : prout\n");
+    if (l < values_l.nb_elem && r < values_r.nb_elem) {
+      if (values_l.values[l] < values_r.values[r]) {
+        values[i] = values_l.values[l];
+        l++;
+      } else {
+        values[i] = values_r.values[r];
+        r++;
+      }
+    }
+    else if (l < values_l.nb_elem) {
+      values[i] = values_l.values[l];
+      l++;
+    } else { // r < values_r.nb_elem
+      values[i] = values_r.values[r];
+      r++;
+    }
+    i++;
+  }
+
+  // save file
+  fprintf(stderr, "DEBUG : %lu\n", i);
+  SU_saveFile(file_target, i, values);
+  // free(values);
 }

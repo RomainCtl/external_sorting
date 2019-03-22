@@ -14,7 +14,7 @@
 #include <unistd.h>	/* Unix std */
 
 #include "system_utils.h"
-#include "fifo.h"
+#include "tree.h"
 
 /**
  * @brief Function to sort a file using an external sort and nb_split subfiles.
@@ -26,56 +26,23 @@
 void projectV5(const char * i_file, const char * o_file, unsigned long nb_split);
 
 /**
- * @brief Function to sort each file in thread.
- * @param[in] nb_split Index of the subfile in the array of files.
- * @param[in] filenames Array of file to sort names.
- * @param[in] filenames_sort Array of sorted file names.
+ * @brief Function to run each processus to sort and merge
+ * @param[in] noeud T_noeud to sort or merge
  **/
-void projectV5_sortFiles(pthread_t *thr,
-			 unsigned long nb_split,
-			 char ** filenames,
-			 char ** filenames_sort,
-			 fileD *filenames_sorted);
+void run_tree_v5(T_noeud *noeud, unsigned long id_last);
 
-typedef struct arg_sort_v5 {
-	unsigned long cpt;
-	char *file;
-	char *file_sort;
-	fileD *f;
-} Arg_Sort_v5;
+typedef struct data_v5 {
+	unsigned long nb_elem;
+	int *values;
+} data_structure_v5;
 
 /**
- * @brief Function to sort a temporary subfile and remove it.
- * @param[in] arg Struct arg_sort_v3.
+ * @brief Function to merge to array of data
+ * @param[in] values_l data_structure_v5 left part to merge
+ * @param[in] values_r data_structure_v5 right part to merge
+ * @param[in] file_target Name of the output created file
  **/
-void *v5_sortFiles(void *arg);
-
-/**
- * @brief Function to split sort-merge a list of sorted subfiles in 2 thread and to do the last merge.
- * @param[in] nb_split Index of the subfile in the array of files.
- * @param[in] filenames_sort Array of sorted file names.
- * @param[in] o_file Nome of the output file where sorted data are written.
- * @note It work in stream. Files are not fully loaded in memory.
- **/
-void projectV5_combMerge(pthread_t *thr,
-			 unsigned long nb_split,
-			 fileD *filenames_sorted,
-			 const char * o_file);
-
-
-typedef struct arg_merge_v5 {
-	char *dest;
-	unsigned long thr_to_wait;
-	pthread_t *thr;
-	fileD *f;
-} Arg_Merge_v5;
-
-/**
- * @brief Function to sort-merge a list of sorted subfiles.
- * @param[in] arg Struct arg_merge_v3.
- **/
-void *v5_mergeFiles(void *arg);
-
+void merge_sorted_data_v5(const data_structure_v5 values_l, const data_structure_v5 values_r, const char * file_target);
 
 
 #endif
