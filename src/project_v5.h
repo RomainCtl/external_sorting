@@ -33,8 +33,10 @@ void run_tree_v5(T_noeud *noeud, unsigned long id_last);
 
 /**
  * @brief Function to merge to array of data
- * @param[in] values_l data_structure_v5 left part to merge
- * @param[in] values_r data_structure_v5 right part to merge
+ * @param[in] nb_elem_l unsigned long number of elem in values_l
+ * @param[in] values_l int* left part to merge
+ * @param[in] nb_elem_r unsigned long number of elem in values_r
+ * @param[in] values_r int right part to merge
  * @param[in] file_target Name of the output created file
  **/
 void merge_sorted_data_v5(unsigned long nb_elem_l, int* values_l, unsigned long nb_elem_r, int* values_r, const char * file_target);
