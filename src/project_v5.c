@@ -67,20 +67,17 @@ void projectV5(const char * i_file, const char * o_file, unsigned long nb_split)
 	);
 
   /* 2 - Create Binary Tree */
-  int **tubes = (int**) malloc(sizeof(int*) * nb_split);
-
   T_noeud **noeuds = (T_noeud**) malloc(sizeof(T_noeud*) * (nb_split *2 -1));
 
   for (cpt=0 ; cpt < nb_split ; cpt++) {
-    // create sort noeud
-    tubes[cpt] = (int*) malloc(sizeof(int) * 2);
-    pipe(tubes[cpt]);
-    noeuds[cpt] = create_noeud(cpt, tubes[cpt], filenames[cpt], NULL, NULL);
+    /* Sort case */
+    noeuds[cpt] = create_noeud(cpt, NULL, filenames[cpt], NULL, NULL);
   }
+
   for (cpt=0 ; cpt < nb_split-1 ; cpt++) {
-    // create merde noeud
+    /* Merge case */
     char *file = (char*) malloc(sizeof(char) * PROJECT_FILENAME_MAX_SIZE);
-    if (cpt == nb_split -2) {
+    if (cpt == nb_split-2) {
       strcpy(file, o_file);
     } else {
       nb_print = snprintf(file,
@@ -90,9 +87,11 @@ void projectV5(const char * i_file, const char * o_file, unsigned long nb_split)
         err(1, "Out of buffer (%s:%d)", __FILE__, __LINE__ );
       }
     }
-    noeuds[nb_split + cpt] = create_noeud(nb_split+cpt, NULL, file, noeuds[cpt*2], noeuds[cpt*2 +1]);
+    noeuds[nb_split+cpt] = create_noeud(nb_split+cpt, NULL, file, noeuds[cpt*2], noeuds[cpt*2 +1]);
   }
   T_noeud *tree = noeuds[nb_split *2 -2];
+
+  display_tree(tree);
 
   /* 3 - Run Trees */
   run_tree_v5(tree, nb_split *2 -2);
@@ -111,7 +110,7 @@ void projectV5(const char * i_file, const char * o_file, unsigned long nb_split)
 
 void run_tree_v5(T_noeud *noeud, unsigned long id_last) {
   if (count_noeud(noeud) < 2) {
-    // Sort case
+    /* Sort case */
     int * values = NULL;
     unsigned long nb_elem = SU_loadFile(noeud->file, &values);
     SU_removeFile(noeud->file);
@@ -119,83 +118,81 @@ void run_tree_v5(T_noeud *noeud, unsigned long id_last) {
 
     SORTALGO(nb_elem, values);
 
-    data_structure_v5 data; // = (data_structure_v5*) malloc(sizeof(data_structure_v5));
-    data.nb_elem = nb_elem;
-    data.values = values;
+    // send value to parent noeud
+    close(noeud->fd[0]);
+    assert( write(noeud->fd[1], &nb_elem, sizeof(nb_elem)) > 0 );
+    assert( write(noeud->fd[1], &values, sizeof(values)) > 0 );
+    close(noeud->fd[1]);
 
-    // return value to parent noeud
-    close(noeud->fd[0]); // closing read part
-    write(noeud->fd[1], &data, sizeof(data));
+    fprintf(stderr, "DEBUG : %lu: %d done\n", noeud->id, getpid());
+    exit(0);
   }
   else {
-    // merge case
-    pid_t *fils = (pid_t*) malloc(sizeof(pid_t) * 2);
+    /* Merge case */
+    pid_t fils_l=-1, fils_r=-1;
+    noeud->left->fd = (int*) malloc(sizeof(int) * 2);
 
-    fils[0] = fork();
-    if (fils[0] == -1){
-      perror("Echec du fork\n");
-      exit(1);
-    } else if (fils[0] == 0) { //fils gauche
-      run_tree_v5(noeud->left, id_last); // lance le traitement du fils gauche
-    }
+    assert( pipe(noeud->left->fd) != -1 );
+    assert( (fils_l = fork()) != -1 );
+
+    /* Left child */
+    if (fils_l == 0) run_tree_v5(noeud->left, id_last);
     else {
-      // pere
-      fils[1] = fork();
-      if (fils[1] == -1){
-        perror("Echec du fork\n");
-        exit(1);
-      } else if (fils[1] == 0) { //fils droite
-        run_tree_v5(noeud->right, id_last); // lance le traitement du fils droite
-      }
-      else {
-        //pere
-        data_structure_v5 value_r;// = (data_structure_v5*) malloc(sizeof(data_structure_v5));
-        data_structure_v5 value_l;// = (data_structure_v5*) malloc(sizeof(data_structure_v5));
+      /* father */
+      noeud->right->fd = (int*) malloc(sizeof(int) * 2);
 
-        if (count_noeud(noeud->left) == 1){ // Le fils gauche est un sort
-          close(noeud->left->fd[1]); // closing write part
-          ssize_t t = read(noeud->left->fd[0], &value_l, sizeof(value_l));
-          if (t == -1) {
-            perror("Echec de la lecture (pipe)");
-            exit(1);
-          }
-          close(noeud->left->fd[0]);
-          fflush(NULL);
-        } else { // c'est un merge, on récup le contenu du fichier
-          waitpid(fils[0], NULL, 0); // on attend que le fils termine
-          fprintf(stderr, "DEBUG : %d completed\n", fils[0]);
-          value_l.values = NULL;
-          value_l.nb_elem = SU_loadFile(noeud->left->file, &(value_l.values));
+      assert( pipe(noeud->right->fd) != -1 );
+      assert( (fils_r = fork()) != -1 );
+
+      /* Right child */
+      if (fils_r == 0) run_tree_v5(noeud->right, id_last);
+      else {
+        /* father */
+        int *values_l=NULL, *values_r=NULL;
+        unsigned long nb_elem_l=0, nb_elem_r=0;
+
+        /* close unneeded */
+        close(noeud->left->fd[1]);
+        close(noeud->right->fd[1]);
+
+        if (count_noeud(noeud->left) == 1){
+          /* Case : Left child is sort process */
+          assert( read(noeud->left->fd[0], &nb_elem_l, sizeof(nb_elem_l)) != -1 );
+          assert( read(noeud->left->fd[0], &values_l, sizeof(values_l)) != -1 );
+          // FIXME why i can't access to values_l tab ?? ('/home/romain/Documents/School/system/external_sorting/test.c' work with tab of 10000000 value)
+        } else {
+          /* Case : Left child is merge process */
+          waitpid(fils_l, NULL, 0);
+          fprintf(stderr, "DEBUG : %d completed\n", fils_l);
+
+          nb_elem_l = SU_loadFile(noeud->left->file, &values_l);
           SU_removeFile(noeud->left->file);
         }
+        close(noeud->left->fd[0]);
 
-        if (count_noeud(noeud->right) == 1){ // Le fils droite est un sort
-          close(noeud->right->fd[1]); // closing write part
-          ssize_t t = read(noeud->right->fd[0], &value_r, sizeof(value_r));
-          if (t == -1) {
-            perror("Echec de la lecture (pipe)");
-            exit(1);
-          }
-          close(noeud->left->fd[1]);
-          fflush(NULL);
-        } else { // c'est un merge, on récup le contenu du fichier
-          waitpid(fils[1], NULL, 0); // on attend que le fils termine
-          fprintf(stderr, "DEBUG : %d completed\n", fils[1]);
-          value_r.values = NULL;
-          value_r.nb_elem = SU_loadFile(noeud->right->file, &(value_r.values));
+        if (count_noeud(noeud->right) == 1){
+          /* Case : Right child is sort process */
+          assert( read(noeud->right->fd[0], &nb_elem_r, sizeof(nb_elem_r)) != -1 );
+          assert( read(noeud->right->fd[0], &values_r, sizeof(values_r)) != -1 );
+          // FIXME why i can't access to values_r tab ?? ('/home/romain/Documents/School/system/external_sorting/test.c' work with tab of 10000000 value)
+        } else {
+          /* Case : Right child is merge process */
+          waitpid(fils_r, NULL, 0);
+          fprintf(stderr, "DEBUG : %d completed\n", fils_r);
+
+          nb_elem_r = SU_loadFile(noeud->right->file, &values_r);
           SU_removeFile(noeud->right->file);
         }
+        close(noeud->right->fd[0]);
 
-        // Do the merge
+        /* Merge */
         fprintf(stderr, "Merge sort: %lu + %lu -> %lu (%s) by %d\n",
           noeud->right->id,
           noeud->left->id,
           noeud->id,
           noeud->file,
           getpid());
-        merge_sorted_data_v5(value_l,
-                value_r,
-                noeud->file);
+        merge_sorted_data_v5(nb_elem_l, values_l, nb_elem_r, values_r, noeud->file);
       }
     }
   }
@@ -203,30 +200,28 @@ void run_tree_v5(T_noeud *noeud, unsigned long id_last) {
   if (noeud->id != id_last) exit(0);
 }
 
-void merge_sorted_data_v5(const data_structure_v5 values_l, const data_structure_v5 values_r, const char * file_target) {
-  int *values = (int*) malloc(sizeof(int) * values_l.nb_elem + values_r.nb_elem);
+void merge_sorted_data_v5(unsigned long nb_elem_l, int* values_l, unsigned long nb_elem_r, int* values_r, const char * file_target) {
+  int *values = (int*) malloc(sizeof(int) * (nb_elem_l + nb_elem_r));
 
-  fprintf(stderr, "DEBUG : %lu : %lu\n", values_l.nb_elem, values_r.nb_elem);
-
-  fprintf(stderr, "DEBUG : %d\n", values_l.values[0]);
+  fprintf(stderr, "DEBUG : %lu : %lu\n", nb_elem_l, nb_elem_r);
 
   unsigned long l=0, r=0, i=0;
-  while (l < values_l.nb_elem || r < values_r.nb_elem) {
+  while (l < nb_elem_l || r < nb_elem_r) {
     fprintf(stderr, "DEBUG : prout\n");
-    if (l < values_l.nb_elem && r < values_r.nb_elem) {
-      if (values_l.values[l] < values_r.values[r]) {
-        values[i] = values_l.values[l];
+    if (l < nb_elem_l && r < nb_elem_r) {
+      if (values_l[l] < values_r[r]) {
+        values[i] = values_l[l];
         l++;
       } else {
-        values[i] = values_r.values[r];
+        values[i] = values_r[r];
         r++;
       }
     }
-    else if (l < values_l.nb_elem) {
-      values[i] = values_l.values[l];
+    else if (l < nb_elem_l) {
+      values[i] = values_l[l];
       l++;
-    } else { // r < values_r.nb_elem
-      values[i] = values_r.values[r];
+    } else { // r < nb_elem_r
+      values[i] = values_r[r];
       r++;
     }
     i++;

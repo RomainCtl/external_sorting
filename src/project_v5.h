@@ -31,18 +31,13 @@ void projectV5(const char * i_file, const char * o_file, unsigned long nb_split)
  **/
 void run_tree_v5(T_noeud *noeud, unsigned long id_last);
 
-typedef struct data_v5 {
-	unsigned long nb_elem;
-	int *values;
-} data_structure_v5;
-
 /**
  * @brief Function to merge to array of data
  * @param[in] values_l data_structure_v5 left part to merge
  * @param[in] values_r data_structure_v5 right part to merge
  * @param[in] file_target Name of the output created file
  **/
-void merge_sorted_data_v5(const data_structure_v5 values_l, const data_structure_v5 values_r, const char * file_target);
+void merge_sorted_data_v5(unsigned long nb_elem_l, int* values_l, unsigned long nb_elem_r, int* values_r, const char * file_target);
 
 
 #endif
