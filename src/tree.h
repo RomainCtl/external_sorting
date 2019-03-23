@@ -39,5 +39,22 @@ T_noeud* create_noeud(unsigned long id, int fd[], char *file, T_noeud *l, T_noeu
  */
 int count_noeud(T_noeud *n);
 
+/**
+ * \brief display binary tree in column
+ *
+ * \param t: pointer T_noeud, noeud to display
+ * \param space : int width between left console border and noeud
+ * \param p : char prefix ('-' for racine, '\' for left child and '\' for right child)
+ *
+ **/
+void display_tree_by_col(T_noeud *t, int space, char *p);
+
+/**
+ * \brief display binary tree
+ *
+ * \param t : T_noeud tree to display
+ *
+ **/
+void display_tree(T_noeud *t);
 
 #endif
