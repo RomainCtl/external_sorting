@@ -1,0 +1,5 @@
+
+"sort_algo","entry_lines","split","time(sec)","cpu(%)"
+"Quick",50000000,1,21.29,99
+"Quick",50000000,2,11.78,32
+"Quick",50000000,3,10.48,35
