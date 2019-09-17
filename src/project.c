@@ -7,6 +7,12 @@
 
 #include "system_utils.h"
 #include "project_v0.h"
+#include "project_v1.h"
+#include "project_v2.h"
+#include "project_v3.h"
+#include "project_v4.h"
+#include "project_v5.h"
+#include "project_v6.h"
 
 /**
  * @brief Maximum length (in character) for a file name.
@@ -41,6 +47,7 @@ void usage(){
   fprintf(stderr, "\t demoSortSplit \t Sort a file with a 3 files split	  \n");
   fprintf(stderr, "\t demoSort	    \t Sort a file without spliting	  \n");
   fprintf(stderr, "\t projectV0	    \t V0 of the project         	  \n");
+  fprintf(stderr, "\t projectV1	    \t V1 of the project         	  \n");
   fprintf(stderr, "\n");
   fprintf(stderr, "Examples:								    \n");
   fprintf(stderr, "./bin/project -m test						    \n");
@@ -49,6 +56,12 @@ void usage(){
   fprintf(stderr, "./bin/project -m demoSort -i /tmp/test.txt -o /tmp/test.sort.txt	    \n");
   fprintf(stderr, "./bin/project -m demoSortSplit -i /tmp/test.txt -o /tmp/test.sort.txt    \n");
   fprintf(stderr, "./bin/project -m projectV0 -i /tmp/test.txt -o /tmp/test.sort.txt -k 5   \n");
+  fprintf(stderr, "./bin/project -m projectV1 -i /tmp/test.txt -o /tmp/test.sort.txt -k 5   \n");
+  fprintf(stderr, "./bin/project -m projectV2 -i /tmp/test.txt -o /tmp/test.sort.txt -k 5   \n");
+  fprintf(stderr, "./bin/project -m projectV3 -i /tmp/test.txt -o /tmp/test.sort.txt -k 5   \n");
+  fprintf(stderr, "./bin/project -m projectV4 -i /tmp/test.txt -o /tmp/test.sort.txt -k 5   \n");
+  fprintf(stderr, "./bin/project -m projectV5 -i /tmp/test.txt -o /tmp/test.sort.txt -k 5   \n");
+  fprintf(stderr, "./bin/project -m projectV6 -i /tmp/test.txt -o /tmp/test.sort.txt -k 5   \n");
 }
 
 /* Mode functions declaration */
@@ -72,6 +85,12 @@ int main(int argc, char ** argv){
   int mode_test          = 0;
   int mode_demoSort      = 0;
   int mode_projectV0     = 0;
+  int mode_projectV1     = 0;
+  int mode_projectV2     = 0;
+  int mode_projectV3     = 0;
+  int mode_projectV4     = 0;
+  int mode_projectV5     = 0;
+  int mode_projectV6     = 0;
   int mode_demoSortSplit = 0;
   int mode_lineCount     = 0;
   int mode_generation    = 0;
@@ -136,6 +155,48 @@ int main(int argc, char ** argv){
       fprintf(stderr, "Missing parameters: need an output and an input file.\n");
       errflg++;
     }
+  } else if(strcmp(mode, "projectV1") == 0){
+    mode_projectV1 = 1;
+    /* need at least in and out file */
+    if(strcmp(i_file, "") == 0 || strcmp(o_file, "") == 0){
+      fprintf(stderr, "Missing parameters: need an output and an input file.\n");
+      errflg++;
+    }
+  } else if(strcmp(mode, "projectV2") == 0){
+    mode_projectV2 = 1;
+    /* need at least in and out file */
+    if(strcmp(i_file, "") == 0 || strcmp(o_file, "") == 0){
+      fprintf(stderr, "Missing parameters: need an output and an input file.\n");
+      errflg++;
+    }
+  } else if(strcmp(mode, "projectV3") == 0){
+    mode_projectV3 = 1;
+    /* need at least in and out file */
+    if(strcmp(i_file, "") == 0 || strcmp(o_file, "") == 0){
+      fprintf(stderr, "Missing parameters: need an output and an input file.\n");
+      errflg++;
+    }
+  } else if(strcmp(mode, "projectV4") == 0){
+    mode_projectV4 = 1;
+    /* need at least in and out file */
+    if(strcmp(i_file, "") == 0 || strcmp(o_file, "") == 0){
+      fprintf(stderr, "Missing parameters: need an output and an input file.\n");
+      errflg++;
+    }
+  } else if(strcmp(mode, "projectV5") == 0){
+    mode_projectV5 = 1;
+    /* need at least in and out file */
+    if(strcmp(i_file, "") == 0 || strcmp(o_file, "") == 0){
+      fprintf(stderr, "Missing parameters: need an output and an input file.\n");
+      errflg++;
+    }
+  } else if(strcmp(mode, "projectV6") == 0){
+    mode_projectV6 = 1;
+    /* need at least in and out file */
+    if(strcmp(i_file, "") == 0 || strcmp(o_file, "") == 0){
+      fprintf(stderr, "Missing parameters: need an output and an input file.\n");
+      errflg++;
+    }
   } else if(strcmp(mode, "test") == 0) {
     mode_test = 1;
   } else if(strcmp(mode, "generation") == 0) {
@@ -168,6 +229,15 @@ int main(int argc, char ** argv){
     test();
   }
 
+  /* Time start */
+  char buff[20];
+  struct tm *sTm;
+  time_t start = time(0);
+  sTm = gmtime(&start);
+
+  strftime(buff, sizeof(buff), "%Y-%m-%d %H:%M:%S", sTm);
+  fprintf(stderr, "===== Start procedure at %s =====\n", buff);
+
   /* Call the right function for a mode */
   if(mode_generation){
     /* Mode generation */
@@ -184,7 +254,33 @@ int main(int argc, char ** argv){
   } else if(mode_projectV0){
     /* Mode demo sort split*/
     projectV0(i_file, o_file, nb_split);
+  } else if(mode_projectV1){
+    /* Mode demo sort split*/
+    projectV1(i_file, o_file, nb_split);
+  } else if(mode_projectV2){
+    /* Mode demo sort split*/
+    projectV2(i_file, o_file, nb_split);
+  } else if(mode_projectV3){
+    /* Mode demo sort split*/
+    projectV3(i_file, o_file, nb_split);
+  } else if(mode_projectV4){
+    /* Mode demo sort split*/
+    projectV4(i_file, o_file, nb_split);
+  } else if(mode_projectV5){
+    /* Mode demo sort split*/
+    projectV5(i_file, o_file, nb_split);
+  } else if(mode_projectV6){
+    /* Mode demo sort split*/
+    projectV6(i_file, o_file, nb_split);
   }
+
+  /* Display end time */
+  time_t end = time(0);
+  sTm = gmtime(&end);
+
+  double diff = difftime(end, start);
+  strftime(buff, sizeof(buff), "%Y-%m-%d %H:%M:%S", sTm);
+  fprintf(stderr, "===== End procedure at %s =====\n===== Duration : %5.1f seconds =====\n", buff, diff);
 
   /* End */
   return 0;

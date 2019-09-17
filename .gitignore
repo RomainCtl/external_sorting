@@ -53,6 +53,7 @@ dkms.conf
 
 infos/
 
+.vscode/
 doc/*
 bin/*
 !bin/.gitkeep

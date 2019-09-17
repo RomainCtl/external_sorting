@@ -220,7 +220,7 @@ void SU_fileLoad_structureInit(const char * file, SU_fileLoad_structure * fls) {
   }
 
   if ((fls->fd = open(file, O_RDONLY, 0)) < 0) {
-    err(EX_IOERR, "read (%s:%d)", __FILE__, __LINE__ );
+    err(EX_IOERR, "read (%s:%d) %s, %d", __FILE__, __LINE__ ,file,getpid());
   }
 
   fls->buffer = fls->small_buffer;

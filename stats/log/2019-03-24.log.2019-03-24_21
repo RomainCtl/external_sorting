@@ -1,0 +1,292 @@
+2019-03-24 21:18:16,302 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 3
+2019-03-24 21:18:28,150 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 4
+2019-03-24 21:18:47,749 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 5
+2019-03-24 21:19:08,788 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 6
+2019-03-24 21:19:28,926 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 7
+2019-03-24 21:19:51,107 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 8
+2019-03-24 21:20:12,566 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 9
+2019-03-24 21:20:35,906 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 10
+2019-03-24 21:20:58,562 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 1
+2019-03-24 21:21:12,835 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 2
+2019-03-24 21:21:21,004 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 3
+2019-03-24 21:21:28,162 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 4
+2019-03-24 21:21:40,151 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 5
+2019-03-24 21:21:53,614 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 6
+2019-03-24 21:22:07,402 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 7
+2019-03-24 21:22:21,685 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 8
+2019-03-24 21:22:35,502 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 9
+2019-03-24 21:22:50,195 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 10
+2019-03-24 21:23:04,911 :: root :: INFO :: SortAlog set Insert in src/project_v3.c
+2019-03-24 21:23:04,924 :: root :: DEBUG :: Compiling src/project_v6.o
+2019-03-24 21:23:04,926 :: root :: DEBUG :: --------
+2019-03-24 21:23:04,928 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v6.c -o src/project_v6.o
+2019-03-24 21:23:05,815 :: root :: DEBUG :: Compiling src/project_v0.o
+2019-03-24 21:23:05,818 :: root :: DEBUG :: --------
+2019-03-24 21:23:05,820 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v0.c -o src/project_v0.o
+2019-03-24 21:23:05,890 :: root :: DEBUG :: Compiling src/system_utils.o
+2019-03-24 21:23:05,890 :: root :: DEBUG :: --------
+2019-03-24 21:23:05,891 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/system_utils.c -o src/system_utils.o
+2019-03-24 21:23:05,947 :: root :: DEBUG :: Compiling src/project_v1.o
+2019-03-24 21:23:05,947 :: root :: DEBUG :: --------
+2019-03-24 21:23:05,948 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v1.c -o src/project_v1.o
+2019-03-24 21:23:05,990 :: root :: DEBUG :: Compiling src/project_v5.o
+2019-03-24 21:23:05,991 :: root :: DEBUG :: --------
+2019-03-24 21:23:05,992 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v5.c -o src/project_v5.o
+2019-03-24 21:23:06,041 :: root :: DEBUG :: Compiling src/project_v4.o
+2019-03-24 21:23:06,041 :: root :: DEBUG :: --------
+2019-03-24 21:23:06,042 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v4.c -o src/project_v4.o
+2019-03-24 21:23:06,090 :: root :: DEBUG :: Compiling src/project_v2.o
+2019-03-24 21:23:06,090 :: root :: DEBUG :: --------
+2019-03-24 21:23:06,091 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v2.c -o src/project_v2.o
+2019-03-24 21:23:06,136 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99   -c -o src/project.o src/project.c
+2019-03-24 21:23:06,188 :: root :: DEBUG :: Compiling src/project_v3.o
+2019-03-24 21:23:06,189 :: root :: DEBUG :: --------
+2019-03-24 21:23:06,190 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v3.c -o src/project_v3.o
+2019-03-24 21:23:06,242 :: root :: DEBUG :: Compiling src/fifo.o
+2019-03-24 21:23:06,242 :: root :: DEBUG :: --------
+2019-03-24 21:23:06,243 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/fifo.c -o src/fifo.o
+2019-03-24 21:23:06,271 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99   -c -o src/system_utils_etu.o src/system_utils_etu.c
+2019-03-24 21:23:06,299 :: root :: DEBUG :: Compiling src/tree.o
+2019-03-24 21:23:06,300 :: root :: DEBUG :: --------
+2019-03-24 21:23:06,301 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/tree.c -o src/tree.o
+2019-03-24 21:23:06,327 :: root :: DEBUG :: Linking bytecode : bin/project
+2019-03-24 21:23:06,327 :: root :: DEBUG :: ----------------
+2019-03-24 21:23:06,328 :: root :: DEBUG :: gcc -o bin/project src/project_v6.o src/project_v0.o src/system_utils.o src/project_v1.o src/project_v5.o src/project_v4.o src/project_v2.o src/project.o src/project_v3.o src/fifo.o src/system_utils_etu.o src/tree.o -lm -W -Wall -pedantic -L. -lm -pthread
+2019-03-24 21:23:06,357 :: root :: DEBUG :: Done
+2019-03-24 21:23:06,358 :: root :: DEBUG :: rm src/project_v5.o src/system_utils.o src/tree.o src/project_v4.o src/project_v3.o src/system_utils_etu.o src/project.o src/project_v0.o src/project_v1.o src/project_v6.o src/fifo.o src/project_v2.o
+2019-03-24 21:23:06,358 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 1
+2019-03-24 21:24:26,416 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 1' timed out after 80 seconds
+2019-03-24 21:24:26,416 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:24:26,428 :: root :: INFO :: 0
+2019-03-24 21:24:26,434 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 2
+2019-03-24 21:25:46,489 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 2' timed out after 80 seconds
+2019-03-24 21:25:46,489 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:25:46,504 :: root :: INFO :: 0
+2019-03-24 21:25:46,512 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 3
+2019-03-24 21:27:06,588 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 3' timed out after 80 seconds
+2019-03-24 21:27:06,588 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:27:06,612 :: root :: INFO :: 0
+2019-03-24 21:27:06,618 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 4
+2019-03-24 21:28:26,692 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 4' timed out after 80 seconds
+2019-03-24 21:28:26,692 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:28:26,750 :: root :: INFO :: 0
+2019-03-24 21:28:26,756 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 5
+2019-03-24 21:29:46,832 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 5' timed out after 80 seconds
+2019-03-24 21:29:46,832 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:29:46,886 :: root :: INFO :: 0
+2019-03-24 21:29:46,892 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 6
+2019-03-24 21:31:06,968 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 6' timed out after 80 seconds
+2019-03-24 21:31:06,968 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:31:07,022 :: root :: INFO :: 0
+2019-03-24 21:31:07,028 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 7
+2019-03-24 21:32:27,104 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 7' timed out after 80 seconds
+2019-03-24 21:32:27,104 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:32:27,186 :: root :: INFO :: 0
+2019-03-24 21:32:27,192 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 8
+2019-03-24 21:33:47,268 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 8' timed out after 80 seconds
+2019-03-24 21:33:47,268 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:33:47,334 :: root :: INFO :: 0
+2019-03-24 21:33:47,340 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 9
+2019-03-24 21:35:07,416 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 9' timed out after 80 seconds
+2019-03-24 21:35:07,417 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:35:07,497 :: root :: INFO :: 0
+2019-03-24 21:35:07,503 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 10
+2019-03-24 21:36:27,580 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 10' timed out after 80 seconds
+2019-03-24 21:36:27,580 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:36:27,654 :: root :: INFO :: 0
+2019-03-24 21:36:27,660 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 1
+2019-03-24 21:37:47,695 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 1' timed out after 80 seconds
+2019-03-24 21:37:47,695 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:37:47,707 :: root :: INFO :: 0
+2019-03-24 21:37:47,712 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 2
+2019-03-24 21:39:07,790 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 2' timed out after 80 seconds
+2019-03-24 21:39:07,790 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:39:07,805 :: root :: INFO :: 0
+2019-03-24 21:39:07,810 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 3
+2019-03-24 21:40:27,888 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 3' timed out after 80 seconds
+2019-03-24 21:40:27,888 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:40:27,908 :: root :: INFO :: 0
+2019-03-24 21:40:27,913 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 4
+2019-03-24 21:41:47,988 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 4' timed out after 80 seconds
+2019-03-24 21:41:47,988 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:41:48,062 :: root :: INFO :: 0
+2019-03-24 21:41:48,067 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 5
+2019-03-24 21:43:08,144 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 5' timed out after 80 seconds
+2019-03-24 21:43:08,144 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:43:08,214 :: root :: INFO :: 0
+2019-03-24 21:43:08,219 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 6
+2019-03-24 21:44:28,296 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 6' timed out after 80 seconds
+2019-03-24 21:44:28,296 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:44:28,382 :: root :: INFO :: 0
+2019-03-24 21:44:28,387 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 7
+2019-03-24 21:45:48,464 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 7' timed out after 80 seconds
+2019-03-24 21:45:48,464 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:45:48,538 :: root :: INFO :: 0
+2019-03-24 21:45:48,543 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 8
+2019-03-24 21:47:08,620 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 8' timed out after 80 seconds
+2019-03-24 21:47:08,620 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:47:08,698 :: root :: INFO :: 0
+2019-03-24 21:47:08,703 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 9
+2019-03-24 21:48:28,780 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 9' timed out after 80 seconds
+2019-03-24 21:48:28,780 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:48:28,858 :: root :: INFO :: 0
+2019-03-24 21:48:28,863 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 10
+2019-03-24 21:49:48,940 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 10' timed out after 80 seconds
+2019-03-24 21:49:48,941 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:49:49,030 :: root :: INFO :: 0
+2019-03-24 21:49:49,035 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 1
+2019-03-24 21:51:09,112 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 1' timed out after 80 seconds
+2019-03-24 21:51:09,112 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:51:09,124 :: root :: INFO :: 0
+2019-03-24 21:51:09,128 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 2
+2019-03-24 21:52:29,207 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 2' timed out after 80 seconds
+2019-03-24 21:52:29,207 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:52:29,222 :: root :: INFO :: 0
+2019-03-24 21:52:29,226 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 3
+2019-03-24 21:53:49,304 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 3' timed out after 80 seconds
+2019-03-24 21:53:49,304 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:53:49,324 :: root :: INFO :: 0
+2019-03-24 21:53:49,328 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 4
+2019-03-24 21:55:09,404 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 4' timed out after 80 seconds
+2019-03-24 21:55:09,404 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:55:09,470 :: root :: INFO :: 0
+2019-03-24 21:55:09,473 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 5
+2019-03-24 21:56:29,552 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 5' timed out after 80 seconds
+2019-03-24 21:56:29,552 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:56:29,622 :: root :: INFO :: 0
+2019-03-24 21:56:29,625 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 6
+2019-03-24 21:57:49,704 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 6' timed out after 80 seconds
+2019-03-24 21:57:49,704 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:57:49,786 :: root :: INFO :: 0
+2019-03-24 21:57:49,790 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 7
+2019-03-24 21:59:09,868 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 7' timed out after 80 seconds
+2019-03-24 21:59:09,868 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 21:59:09,954 :: root :: INFO :: 0
+2019-03-24 21:59:09,958 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 8
+2019-03-24 22:00:30,036 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 8' timed out after 80 seconds
+2019-03-24 22:00:30,036 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 22:00:30,126 :: root :: INFO :: 0
+2019-03-24 22:00:30,129 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 9
+2019-03-24 22:01:50,208 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 9' timed out after 80 seconds
+2019-03-24 22:01:50,208 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 22:01:50,266 :: root :: INFO :: 0
+2019-03-24 22:01:50,270 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 10
+2019-03-24 22:03:10,348 :: root :: ERROR :: Command '/usr/bin/time -v ./bin/project -m projectV3 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 10' timed out after 80 seconds
+2019-03-24 22:03:10,348 :: root :: INFO :: ps -a -o pid,cmd | grep -P '([0-9]+) ./bin/project -m projectV.*' | awk '{print  $1}' | xargs -I{} kill -9 {}
+2019-03-24 22:03:10,454 :: root :: INFO :: 0
+2019-03-24 22:03:10,460 :: root :: INFO :: SortAlog set Quick in src/project_v4.c
+2019-03-24 22:03:10,464 :: root :: DEBUG :: Compiling src/project_v6.o
+2019-03-24 22:03:10,464 :: root :: DEBUG :: --------
+2019-03-24 22:03:10,465 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v6.c -o src/project_v6.o
+2019-03-24 22:03:10,518 :: root :: DEBUG :: Compiling src/project_v0.o
+2019-03-24 22:03:10,519 :: root :: DEBUG :: --------
+2019-03-24 22:03:10,520 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v0.c -o src/project_v0.o
+2019-03-24 22:03:10,564 :: root :: DEBUG :: Compiling src/system_utils.o
+2019-03-24 22:03:10,564 :: root :: DEBUG :: --------
+2019-03-24 22:03:10,565 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/system_utils.c -o src/system_utils.o
+2019-03-24 22:03:10,627 :: root :: DEBUG :: Compiling src/project_v1.o
+2019-03-24 22:03:10,628 :: root :: DEBUG :: --------
+2019-03-24 22:03:10,629 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v1.c -o src/project_v1.o
+2019-03-24 22:03:10,682 :: root :: DEBUG :: Compiling src/project_v5.o
+2019-03-24 22:03:10,682 :: root :: DEBUG :: --------
+2019-03-24 22:03:10,683 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v5.c -o src/project_v5.o
+2019-03-24 22:03:10,740 :: root :: DEBUG :: Compiling src/project_v4.o
+2019-03-24 22:03:10,741 :: root :: DEBUG :: --------
+2019-03-24 22:03:10,741 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v4.c -o src/project_v4.o
+2019-03-24 22:03:10,886 :: root :: DEBUG :: Compiling src/project_v2.o
+2019-03-24 22:03:10,887 :: root :: DEBUG :: --------
+2019-03-24 22:03:10,888 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v2.c -o src/project_v2.o
+2019-03-24 22:03:10,956 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99   -c -o src/project.o src/project.c
+2019-03-24 22:03:11,008 :: root :: DEBUG :: Compiling src/project_v3.o
+2019-03-24 22:03:11,009 :: root :: DEBUG :: --------
+2019-03-24 22:03:11,010 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v3.c -o src/project_v3.o
+2019-03-24 22:03:11,062 :: root :: DEBUG :: Compiling src/fifo.o
+2019-03-24 22:03:11,062 :: root :: DEBUG :: --------
+2019-03-24 22:03:11,063 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/fifo.c -o src/fifo.o
+2019-03-24 22:03:11,088 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99   -c -o src/system_utils_etu.o src/system_utils_etu.c
+2019-03-24 22:03:11,116 :: root :: DEBUG :: Compiling src/tree.o
+2019-03-24 22:03:11,117 :: root :: DEBUG :: --------
+2019-03-24 22:03:11,117 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/tree.c -o src/tree.o
+2019-03-24 22:03:11,143 :: root :: DEBUG :: Linking bytecode : bin/project
+2019-03-24 22:03:11,144 :: root :: DEBUG :: ----------------
+2019-03-24 22:03:11,145 :: root :: DEBUG :: gcc -o bin/project src/project_v6.o src/project_v0.o src/system_utils.o src/project_v1.o src/project_v5.o src/project_v4.o src/project_v2.o src/project.o src/project_v3.o src/fifo.o src/system_utils_etu.o src/tree.o -lm -W -Wall -pedantic -L. -lm -pthread
+2019-03-24 22:03:11,173 :: root :: DEBUG :: Done
+2019-03-24 22:03:11,174 :: root :: DEBUG :: rm src/project_v5.o src/system_utils.o src/tree.o src/project_v4.o src/project_v3.o src/system_utils_etu.o src/project.o src/project_v0.o src/project_v1.o src/project_v6.o src/fifo.o src/project_v2.o
+2019-03-24 22:03:11,175 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 1
+2019-03-24 22:03:29,971 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 2
+2019-03-24 22:03:54,577 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 3
+2019-03-24 22:04:20,633 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 4
+2019-03-24 22:04:45,849 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 5
+2019-03-24 22:05:15,996 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 6
+2019-03-24 22:05:47,734 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 7
+2019-03-24 22:06:20,174 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 8
+2019-03-24 22:06:50,870 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 9
+2019-03-24 22:07:24,896 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 10
+2019-03-24 22:07:57,665 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 1
+2019-03-24 22:08:11,361 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 2
+2019-03-24 22:08:28,543 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 3
+2019-03-24 22:08:48,357 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 4
+2019-03-24 22:09:07,152 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 5
+2019-03-24 22:09:28,942 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 6
+2019-03-24 22:09:50,991 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 7
+2019-03-24 22:10:12,282 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 8
+2019-03-24 22:10:33,926 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 9
+2019-03-24 22:10:56,969 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.30m.txt -o /tmp/test.30m.sort.txt -k 10
+2019-03-24 22:11:21,059 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 1
+2019-03-24 22:11:29,790 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 2
+2019-03-24 22:11:40,504 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 3
+2019-03-24 22:11:52,858 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 4
+2019-03-24 22:12:05,095 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 5
+2019-03-24 22:12:19,031 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 6
+2019-03-24 22:12:33,255 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 7
+2019-03-24 22:12:47,586 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 8
+2019-03-24 22:13:01,934 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 9
+2019-03-24 22:13:17,056 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.20m.txt -o /tmp/test.20m.sort.txt -k 10
+2019-03-24 22:13:32,853 :: root :: INFO :: SortAlog set Heap in src/project_v4.c
+2019-03-24 22:13:32,859 :: root :: DEBUG :: Compiling src/project_v6.o
+2019-03-24 22:13:32,859 :: root :: DEBUG :: --------
+2019-03-24 22:13:32,860 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v6.c -o src/project_v6.o
+2019-03-24 22:13:33,898 :: root :: DEBUG :: Compiling src/project_v0.o
+2019-03-24 22:13:33,899 :: root :: DEBUG :: --------
+2019-03-24 22:13:33,900 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v0.c -o src/project_v0.o
+2019-03-24 22:13:33,943 :: root :: DEBUG :: Compiling src/system_utils.o
+2019-03-24 22:13:33,944 :: root :: DEBUG :: --------
+2019-03-24 22:13:33,944 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/system_utils.c -o src/system_utils.o
+2019-03-24 22:13:34,000 :: root :: DEBUG :: Compiling src/project_v1.o
+2019-03-24 22:13:34,000 :: root :: DEBUG :: --------
+2019-03-24 22:13:34,001 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v1.c -o src/project_v1.o
+2019-03-24 22:13:34,048 :: root :: DEBUG :: Compiling src/project_v5.o
+2019-03-24 22:13:34,048 :: root :: DEBUG :: --------
+2019-03-24 22:13:34,049 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v5.c -o src/project_v5.o
+2019-03-24 22:13:34,098 :: root :: DEBUG :: Compiling src/project_v4.o
+2019-03-24 22:13:34,099 :: root :: DEBUG :: --------
+2019-03-24 22:13:34,099 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v4.c -o src/project_v4.o
+2019-03-24 22:13:34,147 :: root :: DEBUG :: Compiling src/project_v2.o
+2019-03-24 22:13:34,148 :: root :: DEBUG :: --------
+2019-03-24 22:13:34,148 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v2.c -o src/project_v2.o
+2019-03-24 22:13:34,196 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99   -c -o src/project.o src/project.c
+2019-03-24 22:13:34,248 :: root :: DEBUG :: Compiling src/project_v3.o
+2019-03-24 22:13:34,249 :: root :: DEBUG :: --------
+2019-03-24 22:13:34,249 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/project_v3.c -o src/project_v3.o
+2019-03-24 22:13:34,301 :: root :: DEBUG :: Compiling src/fifo.o
+2019-03-24 22:13:34,302 :: root :: DEBUG :: --------
+2019-03-24 22:13:34,302 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/fifo.c -o src/fifo.o
+2019-03-24 22:13:34,328 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99   -c -o src/system_utils_etu.o src/system_utils_etu.c
+2019-03-24 22:13:34,355 :: root :: DEBUG :: Compiling src/tree.o
+2019-03-24 22:13:34,356 :: root :: DEBUG :: --------
+2019-03-24 22:13:34,357 :: root :: DEBUG :: gcc -O0 -g -W -Wall -Wextra -Wconversion -Werror -mtune=native -pthread -march=native  -std=c99 -c src/tree.c -o src/tree.o
+2019-03-24 22:13:34,382 :: root :: DEBUG :: Linking bytecode : bin/project
+2019-03-24 22:13:34,383 :: root :: DEBUG :: ----------------
+2019-03-24 22:13:34,384 :: root :: DEBUG :: gcc -o bin/project src/project_v6.o src/project_v0.o src/system_utils.o src/project_v1.o src/project_v5.o src/project_v4.o src/project_v2.o src/project.o src/project_v3.o src/fifo.o src/system_utils_etu.o src/tree.o -lm -W -Wall -pedantic -L. -lm -pthread
+2019-03-24 22:13:34,411 :: root :: DEBUG :: Done
+2019-03-24 22:13:34,412 :: root :: DEBUG :: rm src/project_v5.o src/system_utils.o src/tree.o src/project_v4.o src/project_v3.o src/system_utils_etu.o src/project.o src/project_v0.o src/project_v1.o src/project_v6.o src/fifo.o src/project_v2.o
+2019-03-24 22:13:34,413 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 1
+2019-03-24 22:14:05,642 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 2
+2019-03-24 22:14:33,644 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 3
+2019-03-24 22:15:03,520 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 4
+2019-03-24 22:15:29,597 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 5
+2019-03-24 22:16:02,610 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 6
+2019-03-24 22:16:35,524 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 7
+2019-03-24 22:17:04,437 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 8
+2019-03-24 22:17:34,609 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 9
+2019-03-24 22:18:08,227 :: root :: INFO :: /usr/bin/time -v ./bin/project -m projectV4 -i /tmp/test.40m.txt -o /tmp/test.40m.sort.txt -k 10
